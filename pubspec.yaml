@@ -1,0 +1,36 @@
+name: flutter_offers
+description: Offers.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.3.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_svg: ^0.17.1
+
+
+flutter:
+
+  uses-material-design: true
+
+  fonts:
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/GoogleSans-Regular.ttf
+        - asset: assets/fonts/GoogleSans-Bold.ttf
+        - asset: assets/fonts/GoogleSans-Italic.ttf
+        - asset: assets/fonts/GoogleSans-Medium.ttf
+        - asset: assets/fonts/GoogleSans-BoldItalic.ttf
+        - asset: assets/fonts/GoogleSans-MediumItalic.ttf
+  assets:
+    - assets/images/
+    - assets/images/logos/
+    - assets/images/offers/
