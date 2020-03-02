@@ -21,8 +21,6 @@ class OfferTile extends StatelessWidget {
               ),
             ),
             Container(
-              width: width,
-              height: height,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   color: Colors.white,
@@ -39,8 +37,6 @@ class OfferTile extends StatelessWidget {
                       ])),
             ),
             Positioned(
-              width: width,
-              height: height,
               child: Align(
                 alignment: FractionalOffset.bottomLeft,
                 child: ListTile(
