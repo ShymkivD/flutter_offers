@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   final TabController tabController;
@@ -28,7 +27,10 @@ class _SearchAppBarState extends State<SearchAppBar> {
       leading: Padding(
           padding: EdgeInsets.only(left: 12.0),
           child: IconButton(
-            icon: SvgPicture.asset('assets/images/back.svg'),
+            icon: Image.asset(
+              'assets/images/menu.png',
+              scale: 2.6,
+            ),
             onPressed: () {},
           )),
       title: appBarTitle,
@@ -53,7 +55,10 @@ class _SearchAppBarState extends State<SearchAppBar> {
               });
             }),
         IconButton(
-          icon: SvgPicture.asset('assets/images/info.svg'),
+          icon: Image.asset(
+            'assets/images/info.png',
+            scale: 2.6,
+          ),
           onPressed: () {},
         ),
       ],

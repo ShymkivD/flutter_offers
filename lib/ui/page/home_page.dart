@@ -23,12 +23,11 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppBar(_tabController),
-      backgroundColor: Colors.white,
-      body: TabBarView(
-        children: [OffersTab(), CompaniesTab()],
-        controller: _tabController,
-      ),
-    );
+        appBar: SearchAppBar(_tabController),
+        backgroundColor: Colors.white,
+        body: TabBarView(
+          children: [OffersTab(), CompaniesTab()],
+          controller: _tabController,
+        ));
   }
 }

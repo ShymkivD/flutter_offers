@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_offers/ui/screen/home_page.dart';
+import 'package:flutter_offers/custom_routes.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Offers',
       debugShowCheckedModeBanner: false,
       theme: theme,
-      home: HomePage(),
+      onGenerateRoute: CustomRoutes.generateRoute,
+      initialRoute: CustomRoutes.HOME_PAGE,
     );
   }
 }
