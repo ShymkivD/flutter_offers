@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_offers/ui/widget/companies_tab.dart';
+import 'package:flutter_offers/ui/widget/company/companies_tab.dart';
 import 'package:flutter_offers/ui/widget/offers_tab.dart';
 import 'package:flutter_offers/ui/widget/search_app_bar.dart';
 
