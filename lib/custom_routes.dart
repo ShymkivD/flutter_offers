@@ -22,7 +22,8 @@ class CustomRoutes {
         break;
     }
 //    return MaterialPageRoute(builder: (_) => screen);
-    return ScaleRoute(page: screen);
+    return CustomMaterialRouter(builder: (_) => screen);
+//    return ScaleRoute(page: screen);
   }
 }
 
@@ -55,4 +56,21 @@ class ScaleRoute extends PageRouteBuilder {
             child: child,
           ),
         );
+}
+
+class CustomMaterialRouter extends MaterialPageRoute {
+  CustomMaterialRouter({WidgetBuilder builder, RouteSettings settings})
+      : super(builder: builder, settings: settings);
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 650);
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation animation,
+      Animation secondaryAnimation, Widget child) {
+    if (settings.isInitialRoute) {
+      return child;
+    }
+    return FadeTransition(opacity: animation, child: child);
+  }
 }

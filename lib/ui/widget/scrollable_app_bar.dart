@@ -38,9 +38,12 @@ class ScrollableAppBar extends StatelessWidget {
       ),
       flexibleSpace: FlexibleSpaceBar(
           collapseMode: CollapseMode.pin,
-          background: Image.asset(
-            args[1],
-            scale: 1.5,
+          background: Hero(
+            tag: args[1],
+            child: Image.asset(
+              args[1],
+              scale: 1.5,
+            ),
           )),
       bottom: TabBar(
         unselectedLabelColor: blackOrWhite().withOpacity(0.56),

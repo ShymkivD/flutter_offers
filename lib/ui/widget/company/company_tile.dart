@@ -18,7 +18,7 @@ class CompanyTile extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           color: color,
-          child: Image.asset(image, scale: 2.6)),
+          child: Hero(tag: image, child: Image.asset(image, scale: 2.6))),
     );
   }
 }

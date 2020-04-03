@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_offers/utils/date_utils.dart';
 
 class WorkSchedule extends StatefulWidget {
@@ -64,7 +65,10 @@ class _WorkScheduleState extends State<WorkSchedule> {
                               fontWeight: FontWeight.w600))
                     ],
                   ),
-                  ListView(shrinkWrap: true, children: widget.workingDays)
+                  ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: widget.workingDays)
                 ],
               ),
             )),

@@ -7,7 +7,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 class CompanyDetailsTab extends StatefulWidget {
   final List<dynamic> args;
   final String comment =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+      'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
   CompanyDetailsTab(this.args, {Key key}) : super(key: key);
 
   @override
@@ -41,7 +42,7 @@ class _CompanyDetailsTabState extends State<CompanyDetailsTab> {
                 ),
               ),
               Dismissible(
-                key: Key(' '),
+                key: UniqueKey(),
                 direction: DismissDirection.endToStart,
                 background: Align(
                   alignment: Alignment.centerRight,
@@ -53,7 +54,7 @@ class _CompanyDetailsTabState extends State<CompanyDetailsTab> {
                           alignment: AlignmentDirectional.centerEnd,
                           color: Color(0xFFFF473D),
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 15.0),
+                            padding: const EdgeInsets.only(right: 25.0),
                             child: Icon(Icons.delete, color: Colors.white),
                           ),
                         ),
@@ -63,7 +64,7 @@ class _CompanyDetailsTabState extends State<CompanyDetailsTab> {
                           alignment: AlignmentDirectional.centerEnd,
                           color: Color(0xFF3C83EE),
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 15.0),
+                            padding: const EdgeInsets.only(right: 25.0),
                             child: Icon(
                               Icons.edit,
                               color: Colors.white,
