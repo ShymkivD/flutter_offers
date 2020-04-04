@@ -31,7 +31,9 @@ class _SearchAppBarState extends State<SearchAppBar> {
               'assets/images/menu.png',
               scale: 2.6,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
           )),
       title: appBarTitle,
       actions: <Widget>[

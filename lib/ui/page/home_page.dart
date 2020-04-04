@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/ui/widget/company/companies_tab.dart';
+import 'package:flutter_offers/ui/widget/main_drawer.dart';
 import 'package:flutter_offers/ui/widget/offers_tab.dart';
 import 'package:flutter_offers/ui/widget/search_app_bar.dart';
 
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: SearchAppBar(_tabController),
+        drawer: MainDrawer(),
         backgroundColor: Colors.white,
         body: TabBarView(
           children: [OffersTab(), CompaniesTab()],
