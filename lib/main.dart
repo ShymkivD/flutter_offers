@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
     return StreamProvider.value(
       value: AuthService().user,
       child: MaterialApp(
-          title: 'Flutter Offers',
-          debugShowCheckedModeBanner: false,
-          theme: theme,
-          onGenerateRoute: CustomRoutes.generateRoute,
-          home: Wrapper()
-//        initialRoute: CustomRoutes.HOME_PAGE,
-          ),
+        title: 'Flutter Offers',
+        debugShowCheckedModeBanner: false,
+        theme: theme,
+        onGenerateRoute: CustomRoutes.generateRoute,
+//        home: Wrapper(),
+        initialRoute: CustomRoutes.HOME_PAGE,
+      ),
     );
   }
 }

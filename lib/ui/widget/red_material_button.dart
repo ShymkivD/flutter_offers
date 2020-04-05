@@ -3,15 +3,21 @@ import 'package:flutter/material.dart';
 class RedMaterialButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
+  final EdgeInsets padding;
 
-  const RedMaterialButton({Key key, this.title, this.onPressed})
+  const RedMaterialButton(
+      {Key key,
+      this.title,
+      this.onPressed,
+      this.padding =
+          const EdgeInsets.symmetric(horizontal: 65.0, vertical: 10.0)})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: MaterialButton(
-        padding: const EdgeInsets.symmetric(horizontal: 65.0, vertical: 10.0),
+        padding: padding,
         onPressed: onPressed,
         color: Color(0xFFFF473D),
         splashColor: Colors.redAccent,

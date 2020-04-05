@@ -64,5 +64,5 @@ class ScrollableAppBar extends StatelessWidget {
   }
 
   Color blackOrWhite() =>
-      int.parse(company.color) == Colors.white ? Colors.black : Colors.white;
+      int.parse(company.color) == 0xFFFFFFFF ? Colors.black : Colors.white;
 }
