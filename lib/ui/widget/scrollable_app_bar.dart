@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offers/models/company.dart';
 import 'package:flutter_offers/ui/widget/sliver_app_bar_component.dart';
 
 class ScrollableAppBar extends StatelessWidget {
-  final List<dynamic> args;
+  final Company company;
   final TabController _companyTabController;
-  ScrollableAppBar(this.args, this._companyTabController);
+  ScrollableAppBar(this.company, this._companyTabController);
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: args[2],
+      backgroundColor: Color(int.parse(company.color)),
       expandedHeight: 200.0,
       elevation: 0.0,
       pinned: true,
@@ -23,10 +24,10 @@ class ScrollableAppBar extends StatelessWidget {
       title: SliverAppBarComponent(
         hiddenChild: Row(
           children: <Widget>[
-            Image.asset(args[1], scale: 4),
+            Image.asset(company.image, scale: 4),
             Padding(
               padding: const EdgeInsets.only(left: 30.0),
-              child: Text(args[0],
+              child: Text(company.title,
                   style: TextStyle(
                     color: blackOrWhite(),
                     fontSize: 20,
@@ -39,9 +40,9 @@ class ScrollableAppBar extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
           collapseMode: CollapseMode.pin,
           background: Hero(
-            tag: args[1],
+            tag: company.image,
             child: Image.asset(
-              args[1],
+              company.image,
               scale: 1.5,
             ),
           )),
@@ -62,5 +63,6 @@ class ScrollableAppBar extends StatelessWidget {
     );
   }
 
-  Color blackOrWhite() => args[2] == Colors.white ? Colors.black : Colors.white;
+  Color blackOrWhite() =>
+      int.parse(company.color) == Colors.white ? Colors.black : Colors.white;
 }

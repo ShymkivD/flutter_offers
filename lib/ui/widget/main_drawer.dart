@@ -67,7 +67,7 @@ class MainDrawer extends StatelessWidget {
                     ListTile(
                       leading: Image.asset(
                         'assets/images/barCode.png',
-                        scale: 2.5,
+                        scale: 2.6,
                       ),
                       title: Text(
                         'Корпоратка',
@@ -78,7 +78,7 @@ class MainDrawer extends StatelessWidget {
                     ListTile(
                       leading: Image.asset(
                         'assets/images/transaction.png',
-                        scale: 2.2,
+                        scale: 2.3,
                       ),
                       title: Text(
                         'Транзакции',
@@ -124,8 +124,8 @@ class MainDrawer extends StatelessWidget {
                         'assets/images/logOutButton.png',
                         scale: 3.0,
                       ),
-                      onTap: () {
-                        _auth.signOut();
+                      onTap: () async {
+                        await _auth.signOut();
                       },
                     ),
                   ],

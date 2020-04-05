@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offers/models/company.dart';
 import 'package:flutter_offers/ui/widget/company/about_company.dart';
 import 'package:flutter_offers/ui/widget/company/company_header.dart';
 import 'package:flutter_offers/ui/widget/company/work_schedule.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class CompanyDetailsTab extends StatefulWidget {
-  final List<dynamic> args;
+  final Company company;
   final String comment =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
       'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-  CompanyDetailsTab(this.args, {Key key}) : super(key: key);
+  CompanyDetailsTab(this.company, {Key key}) : super(key: key);
 
   @override
   _CompanyDetailsTabState createState() => _CompanyDetailsTabState();
@@ -24,9 +25,14 @@ class _CompanyDetailsTabState extends State<CompanyDetailsTab> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              CompanyHeader(widget.args),
+              CompanyHeader(
+                title: widget.company.title,
+                type: widget.company.type,
+                rating: widget.company.rating,
+                votes: widget.company.votes,
+              ),
               Divider(),
-              AboutCompany(),
+              AboutCompany(widget.company.description),
               Divider(),
               WorkSchedule(),
               Divider(),

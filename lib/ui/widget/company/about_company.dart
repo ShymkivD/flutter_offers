@@ -2,10 +2,9 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 class AboutCompany extends StatefulWidget {
-  final String about =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute iru';
+  final String description;
 
-  AboutCompany({Key key}) : super(key: key);
+  AboutCompany(this.description, {Key key}) : super(key: key);
 
   @override
   _AboutCompanyState createState() => _AboutCompanyState();
@@ -50,13 +49,13 @@ class _AboutCompanyState extends State<AboutCompany> {
                 ),
                 subtitle: Expandable(
                   collapsed: Text(
-                    widget.about,
+                    widget.description,
                     softWrap: true,
-                    maxLines: 4,
+                    maxLines: 6,
                     overflow: TextOverflow.ellipsis,
                   ),
                   expanded: Text(
-                    widget.about,
+                    widget.description,
                     softWrap: true,
                   ),
                   controller: _expandableController,

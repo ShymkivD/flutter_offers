@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/custom_routes.dart';
+import 'package:flutter_offers/models/company.dart';
 
 class CompanyTile extends StatelessWidget {
-  final String image;
-  final String companyName;
-  final Color color;
-  CompanyTile(this.companyName, this.image, {this.color = Colors.white});
+  final Company company;
+
+  CompanyTile(this.company);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, CustomRoutes.COMPANY_PAGE,
-            arguments: [companyName, image, color]);
+            arguments: company);
       },
       child: Card(
           elevation: 1,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-          color: color,
-          child: Hero(tag: image, child: Image.asset(image, scale: 2.6))),
+          color: Color(int.parse(company.color)),
+          child: Hero(
+              tag: company.image,
+              child: Image.asset(company.image, scale: 2.6))),
     );
   }
 }
