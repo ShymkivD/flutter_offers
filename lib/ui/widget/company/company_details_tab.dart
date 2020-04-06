@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offers/models/company.dart';
 import 'package:flutter_offers/ui/widget/company/about_company.dart';
 import 'package:flutter_offers/ui/widget/company/company_header.dart';
+import 'package:flutter_offers/ui/widget/company/company_review_form.dart';
 import 'package:flutter_offers/ui/widget/company/company_reviews.dart';
 import 'package:flutter_offers/ui/widget/company/work_schedule.dart';
-import 'package:flutter_offers/ui/widget/red_material_button.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class CompanyDetailsTab extends StatefulWidget {
   final Company company;
@@ -37,6 +36,7 @@ class _CompanyDetailsTabState extends State<CompanyDetailsTab> {
               WorkSchedule(widget.company.workingDays),
               Divider(),
               CompanyReviews(),
+              CompanyReviewForm(),
             ]),
       ),
     );

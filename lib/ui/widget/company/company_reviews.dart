@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/ui/widget/company/company_active_user_review.dart';
-import 'package:flutter_offers/ui/widget/company/company_review_form.dart';
 import 'package:flutter_offers/ui/widget/company/company_user_review.dart';
 
 class CompanyReviews extends StatefulWidget {
@@ -58,7 +57,6 @@ class _CompanyReviewsState extends State<CompanyReviews> {
             ),
           ],
         ),
-        CompanyReviewForm(),
       ],
     );
   }

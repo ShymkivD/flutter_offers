@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/ui/page/company_page.dart';
+import 'package:flutter_offers/ui/page/edit_profile_page.dart';
 import 'package:flutter_offers/ui/page/home_page.dart';
 
 class CustomRoutes {
   static const HOME_PAGE = '/';
   static const PROFILE = '/profile';
+  static const EDIT_PROFILE = '/edit_profile';
   static const COMPANY_PAGE = '/company';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -17,45 +19,16 @@ class CustomRoutes {
       case PROFILE:
         screen = Container();
         break;
+      case EDIT_PROFILE:
+        screen = EditProfilePage();
+        break;
       case COMPANY_PAGE:
         screen = CompanyPage(args);
         break;
     }
 //    return MaterialPageRoute(builder: (_) => screen);
     return CustomMaterialRouter(builder: (_) => screen);
-//    return ScaleRoute(page: screen);
   }
-}
-
-class ScaleRoute extends PageRouteBuilder {
-  final Widget page;
-  ScaleRoute({this.page})
-      : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              ScaleTransition(
-            scale: Tween<double>(
-              begin: 0.0,
-              end: 1.0,
-            ).animate(
-              CurvedAnimation(
-                parent: animation,
-                curve: Curves.fastOutSlowIn,
-              ),
-            ),
-            child: child,
-          ),
-        );
 }
 
 class CustomMaterialRouter extends MaterialPageRoute {

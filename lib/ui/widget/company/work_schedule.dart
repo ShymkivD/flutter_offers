@@ -25,7 +25,8 @@ class _WorkScheduleState extends State<WorkSchedule> {
 
       int closeHour = int.parse(date.closingTime.split(':')[0]);
       int closeMinute = int.parse(date.closingTime.split(':')[1]);
-      if (now.hour > openHour && now.hour < (closeHour == 0 ? 24 : closeHour)) {
+      if (now.hour >= openHour &&
+          now.hour < (closeHour == 0 ? 24 : closeHour)) {
         return true;
       } else if (openHour == now.hour) {
         if (now.minute >= openMinute && now.minute <= closeMinute) {

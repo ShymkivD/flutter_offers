@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offers/custom_routes.dart';
 import 'package:flutter_offers/services/auth.dart';
 import 'package:flutter_offers/ui/widget/red_material_button.dart';
 
@@ -52,6 +53,10 @@ class MainDrawer extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.white70, fontWeight: FontWeight.w600),
                       ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, CustomRoutes.EDIT_PROFILE);
+                      },
                     ),
                     ListTile(
                       leading: Icon(

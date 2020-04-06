@@ -39,7 +39,8 @@ class _CompanyActiveUserReviewState extends State<CompanyActiveUserReview> {
                 onTap: () {
                   setState(() {
                     actions = <Widget>[
-                      SlideAction(color: Color(0xFFFF473D), child: SizedBox())
+                      IconSlideAction(
+                          color: Color(0xFFFF473D), icon: Icons.delete)
                     ];
                   });
                   _slidableKey.currentState.dismiss();
