@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_offers/models/workingDay.dart';
+import 'package:flutter_offers/models/working_day.dart';
 import 'package:flutter_offers/utils/date_utils.dart';
 
 class WorkSchedule extends StatefulWidget {

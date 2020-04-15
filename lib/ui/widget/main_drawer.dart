@@ -38,70 +38,50 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 25.0, 0.0, 0.0),
+                padding: const EdgeInsets.only(top: 25.0),
                 child: ListView(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   children: <Widget>[
-                    ListTile(
-                      leading: Icon(
-                        Icons.person,
-                        color: Colors.white70,
-                      ),
-                      title: Text(
-                        'Профиль',
-                        style: TextStyle(
-                            color: Colors.white70, fontWeight: FontWeight.w600),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, CustomRoutes.EDIT_PROFILE);
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.location_on,
-                        color: Colors.white70,
-                      ),
-                      title: Text(
-                        'Позиции',
-                        style: TextStyle(
-                            color: Colors.white70, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Image.asset(
-                        'assets/images/barCode.png',
-                        scale: 2.6,
-                      ),
-                      title: Text(
-                        'Корпоратка',
-                        style: TextStyle(
-                            color: Colors.white70, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Image.asset(
-                        'assets/images/transaction.png',
-                        scale: 2.3,
-                      ),
-                      title: Text(
-                        'Транзакции',
-                        style: TextStyle(
-                            color: Colors.white70, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.settings,
-                        color: Colors.white70,
-                      ),
-                      title: Text(
-                        'Настройка',
-                        style: TextStyle(
-                            color: Colors.white70, fontWeight: FontWeight.w600),
-                      ),
-                    ),
+                    DrawerListTile(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(
+                              context, CustomRoutes.EDIT_PROFILE);
+                        },
+                        leading: Icon(
+                          Icons.person,
+                          color: Colors.white70,
+                        ),
+                        title: 'Профиль'),
+                    DrawerListTile(
+                        onTap: () {},
+                        leading: Icon(
+                          Icons.location_on,
+                          color: Colors.white70,
+                        ),
+                        title: 'Позиции'),
+                    DrawerListTile(
+                        onTap: () {},
+                        leading: Image.asset(
+                          'assets/images/barCode.png',
+                          scale: 2.6,
+                        ),
+                        title: 'Корпоратка'),
+                    DrawerListTile(
+                        onTap: () {},
+                        leading: Image.asset(
+                          'assets/images/transaction.png',
+                          scale: 2.3,
+                        ),
+                        title: 'Транзакции'),
+                    DrawerListTile(
+                        onTap: () {},
+                        leading: Icon(
+                          Icons.settings,
+                          color: Colors.white70,
+                        ),
+                        title: 'Настройка'),
                   ],
                 ),
               ),
@@ -137,6 +117,35 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DrawerListTile extends StatelessWidget {
+  final Widget leading;
+  final String title;
+  final GestureTapCallback onTap;
+
+  DrawerListTile({this.leading, this.title, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 50.0),
+          child: ListTile(
+            leading: leading,
+            title: Text(
+              title,
+              style:
+                  TextStyle(color: Colors.white70, fontWeight: FontWeight.w600),
+            ),
           ),
         ),
       ),

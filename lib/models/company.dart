@@ -1,5 +1,5 @@
 import 'package:flutter_offers/models/offer.dart';
-import 'package:flutter_offers/models/workingDay.dart';
+import 'package:flutter_offers/models/working_day.dart';
 
 class Company {
   final String title;

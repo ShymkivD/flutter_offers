@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offers/custom_routes.dart';
 import 'package:flutter_offers/models/company.dart';
 
-class CompanyTile extends StatelessWidget {
+class CompanyItem extends StatelessWidget {
   final Company company;
 
-  CompanyTile(this.company);
+  CompanyItem(this.company);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offers/ui/authenticate/authenticate.dart';
 import 'package:flutter_offers/ui/page/company_page.dart';
 import 'package:flutter_offers/ui/page/edit_profile_page.dart';
 import 'package:flutter_offers/ui/page/home_page.dart';
@@ -8,6 +9,7 @@ class CustomRoutes {
   static const PROFILE = '/profile';
   static const EDIT_PROFILE = '/edit_profile';
   static const COMPANY_PAGE = '/company';
+  static const AUTHENTICATE_PAGE = '/authenticate';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     Widget screen;
@@ -25,8 +27,10 @@ class CustomRoutes {
       case COMPANY_PAGE:
         screen = CompanyPage(args);
         break;
+      case AUTHENTICATE_PAGE:
+        screen = Authenticate();
+        break;
     }
-//    return MaterialPageRoute(builder: (_) => screen);
     return CustomMaterialRouter(builder: (_) => screen);
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/custom_routes.dart';
+import 'package:flutter_offers/models/user.dart';
 import 'package:flutter_offers/services/auth.dart';
+import 'package:flutter_offers/ui/authenticate/authenticate.dart';
+import 'package:flutter_offers/ui/page/home_page.dart';
 import 'package:flutter_offers/ui/wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -15,15 +18,13 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.white));
 
     return StreamProvider.value(
-      value: AuthService().user,
-      child: MaterialApp(
-        title: 'Flutter Offers',
-        debugShowCheckedModeBanner: false,
-        theme: theme,
-        onGenerateRoute: CustomRoutes.generateRoute,
-//        home: Wrapper(),
-        initialRoute: CustomRoutes.HOME_PAGE,
-      ),
-    );
+        value: AuthService().user,
+        child: MaterialApp(
+          title: 'Flutter Offers',
+          debugShowCheckedModeBanner: false,
+          theme: theme,
+          onGenerateRoute: CustomRoutes.generateRoute,
+          home: Wrapper(),
+        ));
   }
 }

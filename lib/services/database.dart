@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_offers/models/company.dart';
 import 'package:flutter_offers/models/user.dart';
-import 'package:flutter_offers/models/workingDay.dart';
+import 'package:flutter_offers/models/working_day.dart';
 
 class DatabaseService {
   final String uid;

@@ -29,7 +29,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
           child: IconButton(
             icon: Image.asset(
               'assets/images/menu.png',
-              scale: 2.6,
+              scale: 3.0,
             ),
             onPressed: () {
               Scaffold.of(context).openDrawer();
@@ -59,7 +59,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
         IconButton(
           icon: Image.asset(
             'assets/images/info.png',
-            scale: 2.6,
+            scale: 3.0,
           ),
           onPressed: () {},
         ),

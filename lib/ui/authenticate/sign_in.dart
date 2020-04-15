@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offers/custom_routes.dart';
 import 'package:flutter_offers/services/auth.dart';
+import 'package:flutter_offers/ui/widget/auth_input_text_field.dart';
+import 'package:flutter_offers/ui/widget/red_material_button.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -19,107 +22,129 @@ class _SignInState extends State<SignIn> {
   String email = '';
   String password = '';
 
+  final FocusNode _emailNode = FocusNode();
+  final FocusNode _passwordNode = FocusNode();
+
+  changeFocus(BuildContext context, FocusNode node) =>
+      FocusScope.of(context).requestFocus(node);
   @override
-  Widget build(BuildContext context) {
-    return loading
-        ? Container(
-            color: Colors.white,
-            child: Center(child: CircularProgressIndicator()))
-        : Scaffold(
-            backgroundColor: Colors.brown[100],
-            appBar: AppBar(
-              backgroundColor: Colors.brown[400],
-              elevation: 0.0,
-              title: Text('Sign in'),
-              actions: <Widget>[
-                FlatButton.icon(
-                  icon: Icon(Icons.person),
-                  label: Text('Register'),
-                  onPressed: () => widget.toggleView(),
-                ),
+  Widget build(BuildContext context) => loading
+      ? Container(
+          color: Colors.white,
+          child: Center(child: CircularProgressIndicator()))
+      : Scaffold(
+          body: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              begin: FractionalOffset.topLeft,
+              end: FractionalOffset.bottomCenter,
+              colors: [
+                Color(0xFF27C189),
+                Color(0xFF237BBF),
               ],
-            ),
-            body: Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 20.0),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: 'email',
-                        contentPadding: EdgeInsets.all(12.0),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.pink, width: 2.0),
+            )),
+            child: SafeArea(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: FlatButton(
+                          onPressed: () => widget.toggleView(),
+                          child: Text('Зарегистрироваться')),
+                    ),
+                  ),
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Center(
+                          child: Image.asset(
+                        'assets/images/logo.png',
+                        scale: 2.5,
+                      )),
+                    ],
+                  )),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              AuthInputTextField(
+                                onFieldSubmitted: (v) =>
+                                    changeFocus(context, _passwordNode),
+                                error: error.isEmpty ? '' : 'error',
+                                validator: (val) =>
+                                    val.isEmpty ? 'Введите email' : null,
+                                changeCallback: (value) {
+                                  setState(() => email = value);
+                                },
+                                action: TextInputAction.next,
+                                hintText: "Email",
+                                textInputType: TextInputType.emailAddress,
+                                node: _emailNode,
+                              ),
+                              AuthInputTextField(
+                                obscure: true,
+                                error: error.isEmpty ? '' : 'error',
+                                validator: (value) => value.length < 6
+                                    ? 'Введите пароль длинее чем 6 символов'
+                                    : null,
+                                changeCallback: (value) => setState(() {
+                                  return password = value;
+                                }),
+                                action: TextInputAction.next,
+                                hintText: "Пароль",
+                                textInputType: TextInputType.multiline,
+                                node: _passwordNode,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() => email = val);
-                      },
                     ),
-                    SizedBox(height: 20.0),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: 'password',
-                        contentPadding: EdgeInsets.all(12.0),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.pink, width: 2.0),
-                        ),
-                      ),
-                      validator: (val) => val.length < 6
-                          ? 'Enter a password 6+ chars long'
-                          : null,
-                      onChanged: (val) {
-                        setState(() => password = val);
-                      },
-                    ),
-                    SizedBox(height: 20.0),
-                    RaisedButton(
-                        color: Colors.pink[400],
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: RedMaterialButton(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 127.0, vertical: 15.0),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            setState(() => loading = true);
+                            setState(() {
+                              return loading = true;
+                            });
                             dynamic result = await _auth
                                 .signInWithEmailAndPassword(email, password);
                             if (result == null) {
                               setState(() {
                                 loading = false;
-                                error =
-                                    'Could not sign in with those credentials';
+                                error = 'Невозможно войти с этими данными';
                               });
+                            } else {
+                              Navigator.pushReplacementNamed(
+                                  context, CustomRoutes.HOME_PAGE);
                             }
                           }
-                        }),
-                    SizedBox(height: 12.0),
-                    Text(
-                      error,
-                      style: TextStyle(color: Colors.red, fontSize: 14.0),
-                    ),
-                  ],
-                ),
+                        },
+                        title: 'Войти'),
+                  ),
+                  error.isEmpty
+                      ? SizedBox()
+                      : Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                            error,
+                            style: TextStyle(color: Colors.red, fontSize: 14.0),
+                          ),
+                        )
+                ],
               ),
             ),
-          );
-  }
+          ),
+        );
 }
