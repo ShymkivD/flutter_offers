@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_offers/ui/widget/company/company_user_review.dart';
+import 'package:flutter_offers/ui/widget/items/company_user_review.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class CompanyActiveUserReview extends StatefulWidget {

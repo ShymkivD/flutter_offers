@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/ui/widget/company/company_active_user_review.dart';
-import 'package:flutter_offers/ui/widget/company/company_user_review.dart';
+import 'package:flutter_offers/ui/widget/items/company_user_review.dart';
 
 class CompanyReviews extends StatefulWidget {
   CompanyReviews({Key key}) : super(key: key);

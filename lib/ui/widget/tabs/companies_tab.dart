@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/models/company.dart';
 import 'package:provider/provider.dart';
-import 'company_item.dart';
+import '../items/company_item.dart';
 
 class CompaniesTab extends StatefulWidget {
   @override

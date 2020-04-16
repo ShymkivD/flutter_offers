@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/models/company.dart';
-import 'package:flutter_offers/ui/widget/company/company_details_tab.dart';
+import 'package:flutter_offers/ui/widget/tabs/company_details_tab.dart';
 import 'package:flutter_offers/ui/widget/scrollable_app_bar.dart';
 
 class CompanyPage extends StatefulWidget {

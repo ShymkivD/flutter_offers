@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_offers/ui/widget/offer_item.dart';
+import 'package:flutter_offers/ui/widget/items/offer_item.dart';
 
 class OffersTab extends StatelessWidget {
   final offers = [

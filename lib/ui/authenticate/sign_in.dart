@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/custom_routes.dart';
 import 'package:flutter_offers/services/auth.dart';
-import 'package:flutter_offers/ui/widget/auth_input_text_field.dart';
+import 'package:flutter_offers/ui/widget/inputs/auth_input_text_field.dart';
 import 'package:flutter_offers/ui/widget/red_material_button.dart';
 
 class SignIn extends StatefulWidget {

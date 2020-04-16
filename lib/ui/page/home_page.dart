@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/models/company.dart';
 import 'package:flutter_offers/services/database.dart';
-import 'package:flutter_offers/ui/widget/company/companies_tab.dart';
+import 'package:flutter_offers/ui/widget/tabs/companies_tab.dart';
 import 'package:flutter_offers/ui/widget/main_drawer.dart';
-import 'package:flutter_offers/ui/widget/offers_tab.dart';
+import 'package:flutter_offers/ui/widget/tabs/offers_tab.dart';
 import 'package:flutter_offers/ui/widget/search_app_bar.dart';
 import 'package:provider/provider.dart';
 

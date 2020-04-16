@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_offers/ui/authenticate/authenticate.dart';
+import 'package:flutter_offers/ui/page/authenticate.dart';
 import 'package:flutter_offers/ui/page/company_page.dart';
 import 'package:flutter_offers/ui/page/edit_profile_page.dart';
 import 'package:flutter_offers/ui/page/home_page.dart';
