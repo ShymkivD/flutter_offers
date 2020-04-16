@@ -9,6 +9,8 @@ class DatabaseService {
 
   final CollectionReference companiesCollection =
       Firestore.instance.collection('companies');
+  final CollectionReference userCollection =
+      Firestore.instance.collection('users');
 
   List<Company> _companiesListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -36,29 +38,27 @@ class DatabaseService {
     return companiesCollection.snapshots().map(_companiesListFromSnapshot);
   }
 
-//  Future<void> updateUserData(String sugars, String name, int strength) async {
-//    return await companiesCollection.document(uid).setData({
-//      'sugars': sugars,
-//      'name': name,
-//      'strength': strength,
-//    });
-//  }
+  Future<void> updateUserData(UserData user) async {
+    return await userCollection.document(uid).setData({
+      'firstName': user.firstName ?? 'user#' + uid.substring(4, 12),
+      'secondName': user.secondName ?? '',
+      'dateOfBirth': user.dateOfBirth ?? '',
+      'gender': user.gender ?? '',
+    });
+  }
 
 // user data from snapshots
-//  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-//    return UserData(
-//        uid: uid,
-//        name: snapshot.data['name'],
-//        sugars: snapshot.data['sugars'],
-//        strength: snapshot.data['strength']);
-//  }
-//
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    return UserData(
+        uid: uid,
+        firstName: snapshot.data['firstName'],
+        secondName: snapshot.data['secondName'],
+        dateOfBirth: snapshot.data['dateOfBirth'],
+        gender: snapshot.data['gender']);
+  }
 
-//  // get user doc stream
-//  Stream<UserData> get userData {
-//    return companiesCollection
-//        .document(uid)
-//        .snapshots()
-//        .map(_userDataFromSnapshot);
-//  }
+  // get user doc stream
+  Stream<UserData> get userData {
+    return userCollection.document(uid).snapshots().map(_userDataFromSnapshot);
+  }
 }

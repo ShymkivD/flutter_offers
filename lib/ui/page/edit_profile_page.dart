@@ -1,4 +1,15 @@
+import 'dart:io';
+
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_offers/models/user.dart';
+import 'package:flutter_offers/services/database.dart';
 import 'package:flutter_offers/ui/widget/red_material_button.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -10,201 +21,317 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
+
+  // text field state
+  File userAvatar;
+  String firstName = '';
+  String secondName = '';
+  String dateOfBirth = '';
+  String gender = '';
+
+  bool loading = false;
+
+  final FocusNode _firstNameNode = FocusNode();
+  final FocusNode _secondNameNode = FocusNode();
+  final FocusNode _dateOfBirthNode = FocusNode();
+
+  changeFocus(BuildContext context, FocusNode node) =>
+      FocusScope.of(context).requestFocus(node);
+
+  @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF6F6F6),
-      appBar: AppBar(
-        title: Text('Профиль'),
-      ),
-      body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
-        child: Center(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 45.0),
-                        child: Image.asset(
-                          'assets/images/avatar.png',
-                          scale: 1.7,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40.0),
-                        child: Icon(
-                          Icons.camera_enhance,
-                          color: Colors.black.withOpacity(0.30),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            fillColor: Color(0xFFFFFFFF),
-                            filled: true,
-                            labelText: 'Имя',
-                            labelStyle: TextStyle(
-                                color: Color(0xFFFF473D), fontSize: 14),
-                            contentPadding: EdgeInsets.all(12.0),
-                            disabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFFFFFF),
-                                width: 2.0,
-                              ),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.14),
-                                width: 1.0,
-                                style: BorderStyle.solid,
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.black.withOpacity(0.14),
-                                  width: 1.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            fillColor: Color(0xFFFFFFFF),
-                            filled: true,
-                            labelText: 'Фамилия',
-                            labelStyle: TextStyle(
-                                color: Color(0xFFFF473D), fontSize: 14),
-                            contentPadding: EdgeInsets.all(12.0),
-                            disabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFFFFFF),
-                                width: 2.0,
-                              ),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.14),
-                                width: 1.0,
-                                style: BorderStyle.solid,
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.black.withOpacity(0.14),
-                                  width: 1.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            fillColor: Color(0xFFFFFFFF),
-                            filled: true,
-                            labelText: 'Дата рождения',
-                            labelStyle: TextStyle(
-                                color: Color(0xFFFF473D), fontSize: 14),
-                            contentPadding: EdgeInsets.all(12.0),
-                            disabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFFFFFF),
-                                width: 2.0,
-                              ),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.14),
-                                width: 1.0,
-                                style: BorderStyle.solid,
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.black.withOpacity(0.14),
-                                  width: 1.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(26.0, 12.0, 0.0, 0.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('Пол',
-                              style: TextStyle(
-                                  color: Color(0xFFFF473D), fontSize: 14)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Radio(
-                                  value: 'Мужской',
-                                  groupValue: 5,
-                                  onChanged: (a) {},
+    User user = Provider.of<User>(context);
+
+    return StreamBuilder<UserData>(
+        stream: DatabaseService(uid: user.uid).userData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            UserData userData = snapshot.data;
+            if (gender.isEmpty && userData.gender.isNotEmpty)
+              gender = userData.gender;
+            return Scaffold(
+              backgroundColor: Color(0xFFF6F6F6),
+              appBar: AppBar(
+                title: Text('Профиль'),
+              ),
+              body: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: Center(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 35.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 80.0),
+                                child: CircleAvatar(
+                                  radius: 45.0,
+                                  backgroundImage: userAvatar == null
+                                      ? AssetImage('assets/images/avatar.png')
+                                      : FileImage(userAvatar),
                                 ),
-                                Text(
-                                  'Мужской',
-                                  style: TextStyle(fontSize: 16),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 35.0),
+                                child: IconButton(
+                                  onPressed: () async {
+                                    var image = await ImagePicker.pickImage(
+                                        source: ImageSource.gallery);
+
+                                    setState(() {
+                                      userAvatar = image;
+                                    });
+                                  },
+                                  icon: Icon(Icons.camera_enhance),
+                                  color: Colors.black.withOpacity(0.30),
                                 ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 60.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Radio(
-                                    value: 'Женский',
-                                    groupValue: 6,
-                                    onChanged: (a) {},
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: TextFormField(
+                                  initialValue: userData.firstName,
+                                  validator: (val) =>
+                                      val.isEmpty ? 'Введите имя' : null,
+                                  onChanged: (value) {
+                                    setState(() => firstName = value);
+                                  },
+                                  onFieldSubmitted: (v) =>
+                                      changeFocus(context, _secondNameNode),
+                                  focusNode: _firstNameNode,
+                                  decoration: InputDecoration(
+                                    fillColor: Color(0xFFFFFFFF),
+                                    filled: true,
+                                    labelText: 'Имя',
+                                    labelStyle: TextStyle(
+                                        color: Color(0xFFFF473D), fontSize: 14),
+                                    contentPadding: EdgeInsets.all(12.0),
+                                    disabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFFFFFFF),
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black.withOpacity(0.14),
+                                        width: 1.0,
+                                        style: BorderStyle.solid,
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.14),
+                                          width: 1.0),
+                                    ),
                                   ),
-                                  Text('Женский',
-                                      style: TextStyle(fontSize: 16)),
-                                ],
+                                ),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: TextFormField(
+                                  initialValue: userData.secondName,
+                                  onChanged: (value) {
+                                    setState(() => secondName = value);
+                                  },
+                                  onFieldSubmitted: (v) =>
+                                      changeFocus(context, _dateOfBirthNode),
+                                  focusNode: _secondNameNode,
+                                  decoration: InputDecoration(
+                                    fillColor: Color(0xFFFFFFFF),
+                                    filled: true,
+                                    labelText: 'Фамилия',
+                                    labelStyle: TextStyle(
+                                        color: Color(0xFFFF473D), fontSize: 14),
+                                    contentPadding: EdgeInsets.all(12.0),
+                                    disabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFFFFFFF),
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black.withOpacity(0.14),
+                                        width: 1.0,
+                                        style: BorderStyle.solid,
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.14),
+                                          width: 1.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: DateTimeField(
+                                  initialValue: userData.dateOfBirth.isEmpty
+                                      ? DateTime.tryParse('')
+                                      : DateFormat.yMMMMd('ru')
+                                          .parse(userData.dateOfBirth),
+                                  onChanged: (value) {
+                                    setState(() => dateOfBirth =
+                                        DateFormat.yMMMMd('ru').format(value) ??
+                                            '');
+                                  },
+                                  focusNode: _dateOfBirthNode,
+                                  decoration: InputDecoration(
+                                    fillColor: Color(0xFFFFFFFF),
+                                    filled: true,
+                                    labelText: 'Дата рождения',
+                                    labelStyle: TextStyle(
+                                        color: Color(0xFFFF473D), fontSize: 14),
+                                    contentPadding: EdgeInsets.all(12.0),
+                                    disabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFFFFFFF),
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black.withOpacity(0.14),
+                                        width: 1.0,
+                                        style: BorderStyle.solid,
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.14),
+                                          width: 1.0),
+                                    ),
+                                  ),
+                                  format: DateFormat.yMMMMd('ru'),
+                                  onShowPicker: (context, currentValue) {
+                                    return showDatePicker(
+                                      context: context,
+                                      firstDate: DateTime(1900),
+                                      initialDate:
+                                          currentValue ?? DateTime.now(),
+                                      lastDate: DateTime.now()
+                                          .add(Duration(days: 31)),
+                                      locale: const Locale("ru", "RU"),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    26.0, 12.0, 0.0, 0.0),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text('Пол',
+                                      style: TextStyle(
+                                          color: Color(0xFFFF473D),
+                                          fontSize: 14)),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Radio(
+                                          value: 'Мужской',
+                                          activeColor: Color(0xFFFF473D),
+                                          groupValue: gender,
+                                          onChanged: (val) =>
+                                              setState(() => gender = val),
+                                        ),
+                                        Text(
+                                          'Мужской',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 60.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Radio(
+                                            value: 'Женский',
+                                            activeColor: Color(0xFFFF473D),
+                                            groupValue: gender,
+                                            onChanged: (val) =>
+                                                setState(() => gender = val),
+                                          ),
+                                          Text('Женский',
+                                              style: TextStyle(fontSize: 16)),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(top: 75.0, bottom: 16.0),
+                          child: RedMaterialButton(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 80.0, vertical: 15.0),
+                            title: 'Сохранить изменения',
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                await DatabaseService(uid: user.uid)
+                                    .updateUserData(UserData(
+                                  firstName: firstName.isEmpty
+                                      ? userData.firstName
+                                      : firstName,
+                                  secondName: secondName.isEmpty
+                                      ? userData.secondName
+                                      : secondName,
+                                  dateOfBirth: dateOfBirth.isEmpty
+                                      ? userData.dateOfBirth
+                                      : dateOfBirth,
+                                  gender: gender,
+                                ));
+                                Navigator.pop(context);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 90.0, bottom: 16.0),
-                  child: RedMaterialButton(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 80.0, vertical: 15.0),
-                    title: 'Сохранить изменения',
-                    onPressed: () {},
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              ),
+            );
+          } else {
+            return Container(
+              color: Colors.white,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        });
   }
 }

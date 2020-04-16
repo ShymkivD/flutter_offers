@@ -1,18 +1,25 @@
+import 'dart:io';
+
 class User {
-
   final String uid;
-  
-  User({ this.uid });
 
+  User({this.uid});
 }
 
 class UserData {
-
   final String uid;
-  final String name;
-  final String sugars;
-  final int strength;
+  final String firstName;
+  final String secondName;
+  final String dateOfBirth;
+  final String gender;
+  final File userAvatar;
 
-  UserData({ this.uid, this.sugars, this.strength, this.name });
-
+  UserData({
+    this.uid,
+    this.firstName,
+    this.secondName,
+    this.dateOfBirth,
+    this.gender,
+    this.userAvatar,
+  });
 }

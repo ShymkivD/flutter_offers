@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_offers/custom_routes.dart';
 import 'package:flutter_offers/models/user.dart';
 import 'package:flutter_offers/services/auth.dart';
@@ -25,6 +26,14 @@ class MyApp extends StatelessWidget {
           theme: theme,
           onGenerateRoute: CustomRoutes.generateRoute,
           home: Wrapper(),
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('en'),
+            const Locale('ru'),
+          ],
         ));
   }
 }
