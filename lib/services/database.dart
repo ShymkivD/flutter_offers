@@ -44,6 +44,7 @@ class DatabaseService {
       'secondName': user.secondName ?? '',
       'dateOfBirth': user.dateOfBirth ?? '',
       'gender': user.gender ?? '',
+      'userAvatarURL': user.userAvatarURL
     });
   }
 
@@ -54,7 +55,8 @@ class DatabaseService {
         firstName: snapshot.data['firstName'],
         secondName: snapshot.data['secondName'],
         dateOfBirth: snapshot.data['dateOfBirth'],
-        gender: snapshot.data['gender']);
+        gender: snapshot.data['gender'],
+        userAvatarURL: snapshot.data['userAvatarURL']);
   }
 
   // get user doc stream

@@ -1,3 +1,4 @@
+import 'package:flutter_offers/models/company_review.dart';
 import 'package:flutter_offers/models/offer.dart';
 import 'package:flutter_offers/models/working_day.dart';
 
@@ -11,6 +12,7 @@ class Company {
   final int rating;
   final int votes;
   final List<WorkingDay> workingDays;
+  final List<CompanyReview> companyReviews;
 
   Company({
     this.title,
@@ -22,5 +24,6 @@ class Company {
     this.rating,
     this.votes,
     this.workingDays,
+    this.companyReviews,
   });
 }

@@ -12,7 +12,7 @@ class UserData {
   final String secondName;
   final String dateOfBirth;
   final String gender;
-  final File userAvatar;
+  final String userAvatarURL;
 
   UserData({
     this.uid,
@@ -20,6 +20,6 @@ class UserData {
     this.secondName,
     this.dateOfBirth,
     this.gender,
-    this.userAvatar,
+    this.userAvatarURL,
   });
 }
