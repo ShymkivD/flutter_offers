@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_offers/models/company.dart';
+import 'package:flutter_offers/models/company_review.dart';
 import 'package:flutter_offers/models/user.dart';
 import 'package:flutter_offers/models/working_day.dart';
 
@@ -14,22 +15,9 @@ class DatabaseService {
 
   List<Company> _companiesListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      final list = Company(
-          title: doc.data['title'] ?? '',
-          type: doc.data['type'] ?? '',
-          color: doc.data['color'] ?? '0xFFFFFFFF',
-          image: doc.data['image'] ?? 'assets/images/blank.png',
-          description: doc.data['description'] ?? 'No description',
-          rating: doc.data['rating'] ?? 0,
-          votes: doc.data['votes'] ?? 0,
-          workingDays: List.from(doc.data['workingSchedule'])
-                  .map((item) => WorkingDay(
-                      item['day'], item['openingTime'], item['closingTime']))
-                  .toList() ??
-              [],
-          offers: /*List.from(doc.data['offers']) ??*/ []);
+      final list = Company.fromMap(doc.documentID, doc.data);
 
-//      print('some data: ' + list.workingDays[0].day);
+      print('some data about company: ' + doc.documentID);
       return list;
     }).toList();
   }
@@ -62,5 +50,66 @@ class DatabaseService {
   // get user doc stream
   Stream<UserData> get userData {
     return userCollection.document(uid).snapshots().map(_userDataFromSnapshot);
+  }
+
+  Stream<List<UserData>> reviewsUserData(List<String> uids) {
+    if (uids != null) {
+      uids.map((i) => print('valuable  data: ' + i));
+      return userCollection.snapshots().map((snapshot) => snapshot.documents
+              .where((doc) => uids.contains(doc.documentID))
+              .map((doc) {
+            return UserData(
+                uid: doc.documentID,
+                firstName: doc.data['firstName'],
+                secondName: doc.data['secondName'],
+                userAvatarURL: doc.data['userAvatarURL']);
+          }).toList());
+    }
+  }
+
+  List<CompanyReview> _reviewsListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents
+        .map((doc) => CompanyReview.fromMap(doc.data))
+        .toList();
+  }
+
+  Stream<List<CompanyReview>> reviews(String companyID) {
+    return companiesCollection
+        .document(companyID)
+        .collection('reviews')
+        .snapshots()
+        .map(_reviewsListFromSnapshot);
+  }
+
+  Future<void> updateCompanyReview(
+      String companyID, int rating, String review) async {
+    final CollectionReference reviewsCollection =
+        companiesCollection.document(companyID).collection('reviews');
+    String userReviewID = await reviewsCollection
+        .where('uid', isEqualTo: uid)
+        .getDocuments()
+        .then((doc) =>
+            doc.documents.isNotEmpty ? doc.documents.first.documentID : null);
+    if (userReviewID != null) {
+      return await reviewsCollection
+          .document(userReviewID)
+          .updateData({'rating': rating, 'review': review});
+    } else {
+      return await reviewsCollection
+          .add({'uid': uid, 'rating': rating, 'review': review});
+    }
+  }
+
+  Future<void> deleteCompanyReview(String companyID) async {
+    final CollectionReference reviewsCollection =
+        companiesCollection.document(companyID).collection('reviews');
+    String userReviewID = await reviewsCollection
+        .where('uid', isEqualTo: uid)
+        .getDocuments()
+        .then((doc) =>
+            doc.documents.isNotEmpty ? doc.documents.first.documentID : null);
+    if (userReviewID != null) {
+      return await reviewsCollection.document(userReviewID).delete();
+    }
   }
 }

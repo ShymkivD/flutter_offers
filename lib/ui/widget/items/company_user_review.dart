@@ -11,7 +11,7 @@ class CompanyUserReview extends StatelessWidget {
     Key key,
     this.username,
     this.rating = 0.0,
-    this.avatar = 'assets/images/avatar.png',
+    this.avatar,
     this.review,
   }) : super(key: key);
 
@@ -22,9 +22,17 @@ class CompanyUserReview extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(flex: 1, child: Image.asset(avatar)),
-          Expanded(
-            flex: 6,
+          Flexible(
+            flex: 2,
+            child: CircleAvatar(
+              radius: 24.0,
+              backgroundImage: avatar == null
+                  ? AssetImage('assets/images/avatar.png')
+                  : NetworkImage(avatar),
+            ),
+          ),
+          Flexible(
+            flex: 10,
             child: ListTile(
               title: Align(
                 alignment: Alignment.topLeft,
