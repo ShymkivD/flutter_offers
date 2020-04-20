@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offers/custom_routes.dart';
 import 'package:flutter_offers/models/company_review.dart';
 import 'package:flutter_offers/models/user.dart';
 import 'package:flutter_offers/services/database.dart';
@@ -9,7 +10,10 @@ import 'package:provider/provider.dart';
 
 class CompanyReviews extends StatefulWidget {
   final String id;
-  CompanyReviews(this.id, {Key key}) : super(key: key);
+  final String color;
+  final String companyName;
+  CompanyReviews(this.id, {Key key, this.color, this.companyName})
+      : super(key: key);
 
   @override
   _CompanyReviewsState createState() => _CompanyReviewsState();
@@ -24,7 +28,7 @@ class _CompanyReviewsState extends State<CompanyReviews> {
         stream: DatabaseService().reviews(widget.id),
         builder: (context, snapshot) {
           List<CompanyReview> reviews = snapshot.data;
-          print('Total reviews for: ' + reviews?.length.toString());
+          print('Total reviews: ' + reviews?.length.toString());
 
           var usersIDs = reviews != null
               ? reviews.map((review) => review.uid).toList()
@@ -94,7 +98,9 @@ class _CompanyReviewsState extends State<CompanyReviews> {
                             padding: const EdgeInsets.all(0.0),
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: reviews.length,
+                            itemCount: reviews.isNotEmpty
+                                ? reviews.length > 2 ? 2 : reviews.length
+                                : 0,
                             itemBuilder: (context, index) => CompanyUserReview(
                                   username: users[index].firstName +
                                       ' ' +
@@ -103,12 +109,35 @@ class _CompanyReviewsState extends State<CompanyReviews> {
                                   review: reviews[index].review,
                                   avatar: users[index].userAvatarURL,
                                 )),
-                        users.length > 3
+                        reviews.length > 2
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
                                   FlatButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushNamed(context,
+                                          CustomRoutes.COMPANY_REVIEWS_PAGE,
+                                          arguments: activeUserReview != null
+                                              ? [
+                                                  [
+                                                    activeUserReview,
+                                                    ...reviews
+                                                  ],
+                                                  [activeUserData, ...users],
+                                                  [
+                                                    widget.color,
+                                                    widget.companyName
+                                                  ]
+                                                ]
+                                              : [
+                                                  reviews,
+                                                  users,
+                                                  [
+                                                    widget.color,
+                                                    widget.companyName
+                                                  ]
+                                                ]);
+                                    },
                                     child: Text(
                                       ('Все отзывы').toUpperCase(),
                                       style: TextStyle(
@@ -129,22 +158,24 @@ class _CompanyReviewsState extends State<CompanyReviews> {
                       ],
                     );
                   } else {
-                    return Container(
-                      color: Colors.white,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
+                    return Loading();
                   }
                 });
           } else {
-            return Container(
-              color: Colors.white,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+            return Loading();
           }
         });
+  }
+}
+
+class Loading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }

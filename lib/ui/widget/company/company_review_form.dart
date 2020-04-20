@@ -120,7 +120,7 @@ class _CompanyReviewFormState extends State<CompanyReviewForm> {
                   if (_formKey.currentState.validate()) {
                     await DatabaseService(uid: widget.uid).updateCompanyReview(
                         widget.id,
-                        rating != null ? rating.toInt() : widget.rating,
+                        rating != null ? rating.toInt() : widget.rating.toInt(),
                         review != null ? review : widget.review);
                   }
                   widget.onSubmit();

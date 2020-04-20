@@ -35,7 +35,11 @@ class _CompanyDetailsTabState extends State<CompanyDetailsTab> {
               Divider(),
               WorkSchedule(widget.company.workingDays),
               Divider(),
-              CompanyReviews(widget.company.id),
+              CompanyReviews(
+                widget.company.id,
+                color: widget.company.color,
+                companyName: widget.company.title,
+              ),
             ]),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offers/models/company.dart';
 import 'package:flutter_offers/ui/widget/tabs/company_details_tab.dart';
 import 'package:flutter_offers/ui/widget/scrollable_app_bar.dart';
+import 'package:flutter_offers/ui/widget/tabs/company_locations_tab.dart';
 
 class CompanyPage extends StatefulWidget {
   final Company company;
@@ -22,21 +23,28 @@ class _CompanyPageState extends State<CompanyPage>
   }
 
   @override
+  void dispose() {
+    _companyTabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(int.parse(widget.company.color)),
       body: NestedScrollView(
         headerSliverBuilder: (_, __) {
           return <Widget>[
-            ScrollableAppBar(widget.company, _companyTabController),
+            ScrollableAppBar(widget.company, _companyTabController)
           ];
         },
         body: Container(
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             children: [
               SizedBox(),
               CompanyDetailsTab(widget.company),
-              SizedBox()
+              CompanyLocationsTab()
             ],
             controller: _companyTabController,
           ),
