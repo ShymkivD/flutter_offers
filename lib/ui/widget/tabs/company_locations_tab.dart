@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offers/models/place.dart';
+import 'package:flutter_offers/ui/widget/loading.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 
@@ -19,45 +20,9 @@ class CompanyLocationsTab extends StatefulWidget {
 class _CompanyLocationsTabState extends State<CompanyLocationsTab> {
   Completer<GoogleMapController> _controller = Completer();
   final _placesService = GoogleMapsPlaces(apiKey: googleApiKey);
-  static LatLng _initialPosition;
+  LatLng _initialPosition;
   List<Place> places = [];
   final Set<Marker> markers = {};
-
-  void _onMapCreated(GoogleMapController controller) async {
-    _controller.complete(controller);
-  }
-
-  Future<Place> _getDetailsAboutPlace(String placeId) async {
-    var placeDetails =
-        await _placesService.getDetailsByPlaceId(placeId, language: 'RU');
-    var place = placeDetails.result;
-
-    String photoUrl = _placesService.buildPhotoUrl(
-      photoReference: place.photos[0].photoReference,
-      maxHeight: 150,
-    );
-    final position =
-        LatLng(place.geometry.location.lat, place.geometry.location.lng);
-    Place _place = Place(place.name, place.vicinity, photoUrl, position);
-    _savePlace(_place);
-    return _place;
-  }
-
-  void _savePlace(Place place) {
-    _initialPosition =
-        LatLng(place.position.latitude, place.position.longitude);
-
-    places.add(place);
-    markers.add(Marker(
-      markerId: MarkerId(place.position.toString()),
-      position: place.position,
-      infoWindow: InfoWindow(
-        title: place.name,
-        snippet: place.vicinity,
-      ),
-      icon: BitmapDescriptor.defaultMarker,
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +58,42 @@ class _CompanyLocationsTabState extends State<CompanyLocationsTab> {
             return Loading();
           }
         });
+  }
+
+  void _onMapCreated(GoogleMapController controller) async {
+    _controller.complete(controller);
+  }
+
+  Future<Place> _getDetailsAboutPlace(String placeId) async {
+    var placeDetails =
+        await _placesService.getDetailsByPlaceId(placeId, language: 'RU');
+    var place = placeDetails.result;
+
+    String photoUrl = _placesService.buildPhotoUrl(
+      photoReference: place.photos[0].photoReference,
+      maxHeight: 150,
+    );
+    final position =
+        LatLng(place.geometry.location.lat, place.geometry.location.lng);
+    Place _place = Place(place.name, place.vicinity, photoUrl, position);
+    _savePlace(_place);
+    return _place;
+  }
+
+  void _savePlace(Place place) {
+    _initialPosition =
+        LatLng(place.position.latitude, place.position.longitude);
+
+    places.add(place);
+    markers.add(Marker(
+      markerId: MarkerId(place.position.toString()),
+      position: place.position,
+      infoWindow: InfoWindow(
+        title: place.name,
+        snippet: place.vicinity,
+      ),
+      icon: BitmapDescriptor.defaultMarker,
+    ));
   }
 
   Widget _bottomPanel(context, ScrollController scrollController) {
@@ -138,7 +139,7 @@ class _CompanyLocationsTabState extends State<CompanyLocationsTab> {
             ListView.separated(
                 physics: NeverScrollableScrollPhysics(),
                 separatorBuilder: (context, index) => Divider(
-                      indent: 70.0,
+                      indent: 85.0,
                       color: Colors.black.withOpacity(0.35),
                     ),
                 padding: EdgeInsets.all(0.0),
@@ -179,18 +180,6 @@ class _CompanyLocationsTabState extends State<CompanyLocationsTab> {
                 })
           ],
         ),
-      ),
-    );
-  }
-}
-
-class Loading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: CircularProgressIndicator(),
       ),
     );
   }

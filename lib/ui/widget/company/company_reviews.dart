@@ -6,6 +6,7 @@ import 'package:flutter_offers/services/database.dart';
 import 'package:flutter_offers/ui/widget/company/company_active_user_review.dart';
 import 'package:flutter_offers/ui/widget/company/company_review_form.dart';
 import 'package:flutter_offers/ui/widget/items/company_user_review.dart';
+import 'package:flutter_offers/ui/widget/loading.dart';
 import 'package:provider/provider.dart';
 
 class CompanyReviews extends StatefulWidget {
@@ -165,17 +166,5 @@ class _CompanyReviewsState extends State<CompanyReviews> {
             return Loading();
           }
         });
-  }
-}
-
-class Loading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
   }
 }

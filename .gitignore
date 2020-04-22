@@ -1,3 +1,5 @@
+lib/api_key.dart
+
 # Miscellaneous
 *.class
 *.log
@@ -36,4 +38,3 @@ lib/generated_plugin_registrant.dart
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
-lib/api_key.dart

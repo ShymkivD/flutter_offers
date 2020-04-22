@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_offers/ui/widget/loading.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -288,12 +289,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   );
           } else {
-            return Container(
-              color: Colors.white,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+            return Loading();
           }
         });
   }
