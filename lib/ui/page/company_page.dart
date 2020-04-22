@@ -44,7 +44,7 @@ class _CompanyPageState extends State<CompanyPage>
             children: [
               SizedBox(),
               CompanyDetailsTab(widget.company),
-              CompanyLocationsTab()
+              CompanyLocationsTab(widget.company.locations)
             ],
             controller: _companyTabController,
           ),

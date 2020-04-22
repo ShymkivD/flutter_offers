@@ -56,18 +56,12 @@ class _ScrollableAppBarState extends State<ScrollableAppBar> {
           )),
       bottom: TabBar(
         onTap: (tab) {
-          final position = Scrollable.of(context).position;
-          if (widget._companyTabController.index == 2) {
-            position.jumpTo(150.0);
-            setState(() {
+          setState(() {
+            if (widget._companyTabController.index == 2)
               hideFlexibleSpace = true;
-            });
-          } else {
-            setState(() {
+            else
               hideFlexibleSpace = false;
-            });
-            position.jumpTo(-150.0);
-          }
+          });
         },
         unselectedLabelColor: blackOrWhite.withOpacity(0.56),
         labelColor: blackOrWhite,

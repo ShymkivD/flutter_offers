@@ -1,4 +1,3 @@
-import 'package:flutter_offers/models/company_review.dart';
 import 'package:flutter_offers/models/offer.dart';
 import 'package:flutter_offers/models/working_day.dart';
 
@@ -11,6 +10,7 @@ class Company {
   final String description;
   final int rating;
   final int votes;
+  final List<String> locations;
   final List<Offer> offers;
   final List<WorkingDay> workingDays;
 
@@ -23,6 +23,7 @@ class Company {
     this.description,
     this.rating,
     this.votes,
+    this.locations,
     this.workingDays,
     this.offers,
   });
@@ -37,6 +38,7 @@ class Company {
         description: json['description'] ?? 'No description',
         rating: json['rating'] ?? 0,
         votes: json['votes'] ?? 0,
+        locations: List.from(json['locations']) ?? [],
         workingDays: List.from(json['workingSchedule'])
                 .map((item) => WorkingDay.fromMap(item))
                 .toList() ??
