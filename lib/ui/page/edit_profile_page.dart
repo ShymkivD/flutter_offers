@@ -259,7 +259,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                             (await uploadTask.onComplete);
                                         url = (await downloadUrl.ref
                                             .getDownloadURL());
-                                        print("URL is $url");
                                       }
                                       await DatabaseService(uid: user.uid)
                                           .updateUserData(UserData(
@@ -317,27 +316,26 @@ class WaitSavingChanges extends StatelessWidget {
   }
 }
 
-InputDecoration get _inputDecoration {
-  return InputDecoration(
-    fillColor: Color(0xFFFFFFFF),
-    filled: true,
-    labelStyle: TextStyle(color: Color(0xFFFF473D), fontSize: 14),
-    contentPadding: EdgeInsets.all(12.0),
-    disabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Color(0xFFFFFFFF),
-        width: 2.0,
+InputDecoration get _inputDecoration => InputDecoration(
+      fillColor: Color(0xFFFFFFFF),
+      filled: true,
+      labelStyle: TextStyle(color: Color(0xFFFF473D), fontSize: 14),
+      contentPadding: EdgeInsets.all(12.0),
+      disabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(0xFFFFFFFF),
+          width: 2.0,
+        ),
       ),
-    ),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.black.withOpacity(0.14),
-        width: 1.0,
-        style: BorderStyle.solid,
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.black.withOpacity(0.14),
+          width: 1.0,
+          style: BorderStyle.solid,
+        ),
       ),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.black.withOpacity(0.14), width: 1.0),
-    ),
-  );
-}
+      focusedBorder: UnderlineInputBorder(
+        borderSide:
+            BorderSide(color: Colors.black.withOpacity(0.14), width: 1.0),
+      ),
+    );

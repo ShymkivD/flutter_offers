@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offers/ui/widget/items/company_user_review.dart';
 
 class CompanyReviewsPage extends StatelessWidget {
-  List args;
+  final List args;
   CompanyReviewsPage(this.args);
 
   @override
